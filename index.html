@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kumar Prateek</title>
+<meta name="description" content="Kumar Prateek, Staff Software Engineer at Zepto. Backend systems and the tools that make them easier to change.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://kprateek.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kumar Prateek">
+<meta property="og:description" content="I like building backend systems, and the tools that make them easier to change. Staff Software Engineer at Zepto. Building grask.">
+<meta property="og:url" content="https://kprateek.com/">
+<meta property="og:image" content="https://kprateek.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  /* apply saved theme before first paint to avoid a flash */
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<style>
+  :root {
+    --paper: #f5f3ee;
+    --ink: #161616;
+    --muted: #6b6862;
+    --rule: #dcd8cf;
+    --red: #b42318;
+    --code-bg: #ece9e1;
+    --ok: #1f6f3a;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #121212;
+      --ink: #e6e2d8;
+      --muted: #8f8b82;
+      --rule: #2a2925;
+      --red: #d4574e;
+      --code-bg: #1c1c1a;
+      --ok: #5cb176;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #121212;
+    --ink: #e6e2d8;
+    --muted: #8f8b82;
+    --rule: #2a2925;
+    --red: #d4574e;
+    --code-bg: #1c1c1a;
+    --ok: #5cb176;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper); scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 68ch;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 5rem;
+  }
+  a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; text-decoration-color: var(--muted); }
+  a:hover { text-decoration-color: var(--ink); }
+  p { margin: 0 0 1.1em; }
+  strong { font-weight: 600; }
+
+  .mono, code, kbd, pre {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  .meta {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* top nav */
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    margin: 0 0 4rem;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    letter-spacing: .02em;
+  }
+  .top a { text-decoration: none; color: var(--muted); }
+  .top a:hover, .top a:focus-visible { color: var(--ink); outline: none; }
+  .top .theme {
+    all: unset;
+    cursor: pointer;
+    margin-left: auto;
+    padding: .1rem .35rem;
+    border-radius: 2px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1;
+  }
+  .top .theme:hover, .top .theme:focus-visible { color: var(--ink); background: var(--code-bg); }
+  .top .theme .sun { display: none; }
+  :root[data-theme="dark"] .top .theme .sun { display: inline; }
+  :root[data-theme="dark"] .top .theme .moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .top .theme .sun { display: inline; }
+    :root:not([data-theme="light"]) .top .theme .moon { display: none; }
+  }
+
+  /* header */
+  header h1 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin: 0 0 .5rem;
+  }
+  header .role { margin: 0 0 1.8rem; }
+  header .lede {
+    font-size: 27px;
+    line-height: 1.28;
+    font-weight: 500;
+    letter-spacing: -.012em;
+    margin: 0 0 1.2rem;
+    max-width: 24ch;
+  }
+  header .about { color: var(--ink); max-width: 56ch; }
+  header nav { margin-top: 1.2rem; }
+  header nav a { margin-right: 1.1rem; }
+
+  /* sections */
+  section {
+    margin-top: 5rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--rule);
+    position: relative;
+    scroll-margin-top: 1rem;
+  }
+  section > h2 {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 2rem;
+  }
+  @media (min-width: 980px) {
+    section > h2 {
+      position: absolute;
+      left: -9.5rem;
+      top: 1.75rem;
+      width: 8rem;
+      text-align: right;
+      margin: 0;
+    }
+  }
+  .company {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 .2rem;
+  }
+  .company + .meta { display: block; margin-bottom: 1.8rem; }
+  .company-group + .company-group { margin-top: 4rem; }
+  article + article { margin-top: 3rem; }
+  article h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 .25rem;
+  }
+  article .meta { margin-bottom: .9rem; display: block; }
+
+
+  /* probe */
+  .probe {
+    margin: 1.6rem 0 1.4rem;
+    padding: 1.2rem 0 1rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+  }
+  .probe .meta { display: block; margin-bottom: .8rem; text-transform: none; letter-spacing: .02em; }
+  .probe .q { margin-bottom: .9rem; }
+  .probe ol { list-style: none; padding: 0; margin: 0 0 .6rem; }
+  .probe li { margin: 0; }
+  .probe button {
+    all: unset;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    padding: .35rem .5rem .35rem 0;
+    border-radius: 2px;
+    line-height: 1.45;
+  }
+  .probe button:hover, .probe button:focus-visible { background: var(--code-bg); outline: none; }
+  .probe button .k { display: inline-block; width: 1.6rem; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+  .probe.done button { cursor: default; }
+  .probe.done button:hover { background: none; }
+  .probe.done button.picked.right .k { color: var(--ok); }
+  .probe.done button.picked.wrong { color: var(--muted); text-decoration: line-through; }
+  .probe.done button.right { font-weight: 600; }
+  .probe .verdict { display: none; outline: none; margin: .8rem 0 0; padding-top: .8rem; border-top: 1px solid var(--rule); }
+  .probe.done .verdict { display: block; }
+  .probe .mark { color: var(--ok); font-family: ui-monospace, Menlo, monospace; margin-right: .4rem; }
+  .probe .mark.miss { color: var(--red); }
+  .probe details summary { cursor: pointer; color: var(--muted); font-size: 14px; margin-top: .4rem; }
+  .probe.js details { display: none; }
+
+  /* disclosure */
+  .note {
+    margin: 1.2rem 0 1.1rem;
+    padding: .8rem 1rem;
+    border-left: 2px solid var(--red);
+    background: var(--code-bg);
+    font-size: 15px;
+  }
+  .note .meta { display: block; margin-bottom: .3rem; }
+  .note p { margin: 0; }
+
+  pre {
+    background: var(--code-bg);
+    padding: .8rem 1rem;
+    font-size: 13.5px;
+    overflow-x: auto;
+    margin: .6rem 0 1.1rem;
+    line-height: 1.5;
+  }
+  .tags { color: var(--muted); font-size: 14px; }
+
+  ul.plain { list-style: none; padding: 0; margin: 0; }
+  ul.plain li { margin: 0 0 .35rem; }
+
+  footer { margin-top: 5rem; padding-top: 1.6rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: 13px; line-height: 1.9; }
+</style>
+</head>
+<body>
+
+<main id="top">
+
+<nav class="top" aria-label="Sections">
+  <a href="#now">Now</a>
+  <a href="#work">Work</a>
+  <a href="#built">Built</a>
+  <a href="#writing">Writing</a>
+  <button class="theme" id="theme" type="button" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="moon">☾</span><span class="sun">☀</span></button>
+</nav>
+
+<header>
+  <h1>Kumar Prateek</h1>
+  <p class="role meta">Staff Software Engineer · Supply Chain Tech @ Zepto · Bengaluru</p>
+  <p class="lede">I like building backend systems, and the tools that make them easier to change.</p>
+  <p class="about">Backend engineer, six and a half years in. Three of them at OYO, on the services that price a room and discount it; since 2023 in Supply Chain Tech at Zepto, warehouse systems first, then order fulfillment. Outside work I'm slowly getting less bad at chess.</p>
+  <nav class="mono">
+    <a href="https://linkedin.com/in/imkp1">linkedin</a>
+    <a href="mailto:kprateek.bit@gmail.com">email</a>
+    <a href="https://github.com/imkp1">github</a>
+  </nav>
+</header>
+
+<section id="now">
+  <h2>Now</h2>
+  <ul class="plain">
+    <li>Leading the tech roadmap for Supply Chain Tech at Zepto, across the dark-store and mother-hub pods.</li>
+    <li>Scaling mother-hub operations: making the bulk workflows more consistent, efficient, and resilient as volume grows.</li>
+    <li>Working on how to make an AI-driven development lifecycle more robust: the tooling, the checks, and the parts of the cycle that shouldn't be handed to an agent yet. Building grask on the side.</li>
+  </ul>
+</section>
+
+<section id="work">
+  <h2>Work</h2>
+
+  <div class="company-group">
+    <p class="company">Zepto</p>
+    <span class="meta">Staff Software Engineer · Supply Chain Tech · 2023 – present</span>
+
+    <article>
+      <h3>Keeping fulfillment up when its dependencies aren't</h3>
+      <span class="meta">Order fulfillment · 2023 – present</span>
+      <p>An order at Zepto lives in several systems: the ordering system, the warehouse, and last mile. Each holds its own view of where the order is. Keeping fulfillment up at millions of orders a day came down to a few things I designed for. Fallbacks for every downstream, so a dependency being down degrades something instead of stopping picking. A minimal set of services that genuinely have to be up for an order to move, with everything else allowed to lag. Eventual consistency of status across systems, rather than trying to keep them in lock-step. And auto-healing: idempotent writes, automatic retries for transient failures, and reconciliation loops that find and repair disagreements without anyone on call. The same principle runs through how inventory stays consistent across services: nothing in the path needs to be right the first time, it only needs to be safe to run again.</p>
+    </article>
+
+    <article>
+      <h3>An AI development flow that knows the company</h3>
+      <span class="meta">Developer platform · 2026</span>
+      <p>Everyone was already using coding agents. The problem was that the quality of what came out depended almost entirely on who was prompting, and none of the agents knew anything about the company. Not the specs, not the schemas, not why a service looks the way it does.</p>
+      <p>So I built one that does, on the Claude Agent SDK. I designed the flow and wrote the core of it: the agent, the context it's grounded in, the tools it's allowed to reach, and the accounting that tells us what each kind of use costs. The interesting part wasn't putting an agent in front of an engineer. It was giving the agent enough of the company's context that the engineer didn't have to explain the company to it every time. On top of that, one flow everyone goes through: ask, plan, then code and test, with the same skills for everyone, so the result depends on the spec rather than on who typed the prompt. Anyone can ask how something works, propose a design, and carry it to a reviewed PR.</p>
+      <p>Building it also made a question harder to ignore: how much of building software can we hand to machines before engineers stop understanding the systems they're responsible for? That's where grask came from.</p>
+    </article>
+
+    <article>
+      <h3>Building the warehouse system, then everything around it</h3>
+      <span class="meta">Warehouse systems · 2023 – 24</span>
+      <p>I joined when Zepto was replacing its warehouse software with its own. I built core services of the in-house warehouse management system from scratch, inbound first: purchase orders, receiving, put-away. Then took it into production, onto Kubernetes, with the monitoring and alerting that let a small team run it.</p>
+      <p>Once it was running, the job became widening it. I led the split of the monolithic warehouse order system into separate B2B and B2C services, and the zero-downtime migration that came with it. Then the business kept opening new ground, and the same platform had to cover it. We built an in-house kitchen management system on top of it. We added vendor returns and customer returns. And we started fulfilling pharmaceutical SKUs, which come with their own rules on storage, batches and expiry that the system had to enforce.</p>
+    </article>
+  </div>
+
+  <div class="company-group">
+    <p class="company">OYO</p>
+    <span class="meta">Software Engineer · Revenue Tech · 2020 – 23</span>
+
+    <article>
+      <h3>Pricing and promotions</h3>
+      <span class="meta">Coupons · Deals · Promotions platform · Migration</span>
+      <p>Three years on the services that decide what a room costs, and whether you get a discount on it. I started by carving the coupon service out of the Ruby monolith and rewriting it in Java as a rule-based discounting engine that evaluates a coupon against many parameters at once, on the hottest API in the booking flow. From there I owned the deals platform and grew it from a handful of offer types to the full range the business wanted, and then OYO Money discounting, which I reworked until it stopped being the slow part of checkout.</p>
+      <p>The bigger piece was architecting the promotions platform that replaced the pile: coupons, offers, merchant discounts, flash sales, new-user and free-night deals under one model, where the business team creates an offer, a hotel owner subscribes to it, and a guest redeems it. OYO Vacation Homes had been running its own pricing and discounting stack; I designed the migration that folded it into the same platform, so there was one system to operate and a new property type could be onboarded in a fraction of the time.</p>
+      <p>I also led the move of the pricing and promotions stack to a new cloud with no data loss.</p>
+    </article>
+  </div>
+</section>
+
+<section id="built">
+  <h2>Built</h2>
+  <article>
+    <h3>grask</h3>
+    <span class="meta">Open source · Claude Code plugin · alpha</span>
+    <p>The code my agent writes is good. The decisions inside it aren't always mine. Not bugs, choices I approved in half a second and never actually made. Getting code to <em>run</em> used to be the forcing function: you argued the choices out, or it didn't work. That's gone, and nothing replaced it.</p>
+    <p>grask is a small thing that catches this: a signal about whether you actually understood what you shipped. When a Claude Code session ends it reads what happened, and usually asks nothing. When there's something worth asking, one multiple-choice question about the code you just shipped waits for you at <code>/grask:grask</code>. There's no AI grading you. The answer is fixed the moment the question is written. Here's one, from the README:</p>
+
+    <div class="probe" id="probe" data-key="b">
+      <span class="meta">from 2026-08-08 · retry backoff in the webhook dispatcher</span>
+      <p class="q" id="probe-q">Your retry loop sleeps <code>2**attempt</code> seconds between attempts. Why does adding random jitter matter more as the number of clients grows?</p>
+      <div role="group" aria-labelledby="probe-q">
+        <ol>
+          <li><button type="button" data-k="a"><span class="k">a.</span> Jitter reduces the total number of retries each client makes.</button></li>
+          <li><button type="button" data-k="b"><span class="k">b.</span> Clients knocked out together retry together; jitter spreads them back out.</button></li>
+          <li><button type="button" data-k="c"><span class="k">c.</span> Exponential backoff overflows without a random term to bound it.</button></li>
+          <li><button type="button" data-k="d"><span class="k">d.</span> Jitter is what makes the sleep interruptible by a signal.</button></li>
+        </ol>
+      </div>
+      <p class="verdict" tabindex="-1"></p>
+      <details>
+        <summary>show answer</summary>
+        <p><span class="mark">✓ b</span><span class="why">Backoff decides how long each client waits. It does nothing about them all waiting the same amount. Clients dropped by one outage come back in lockstep, so the recovering service takes the same thundering herd on every cycle. Jitter decorrelates the schedules.</span></p>
+      </details>
+    </div>
+
+    <aside class="note">
+      <span class="meta">Before you install</span>
+      <p>It reads your Claude Code transcripts, all repos, not just one, and sends them to a model through the <code>claude</code> binary you already have. If your work is under an agreement that prohibits that, don't install it. The rest of the caveats are in the <a href="https://github.com/imkp1/grask">README</a>.</p>
+    </aside>
+<pre>/plugin marketplace add imkp1/grask
+/plugin install grask</pre>
+    <p class="tags"><span>alpha</span> · <span>MIT</span> · <span>Python ≥ 3.8, no dependencies</span> · <span><a href="https://github.com/imkp1/grask">github.com/imkp1/grask</a></span></p>
+    <p>I don't yet know if it's a product or a tool for a small number of people wired like me. Tell me if it's stupid.</p>
+  </article>
+</section>
+
+<section id="writing">
+  <h2>Writing</h2>
+  <article>
+    <h3><a href="writing/grask.html">The code my agent writes is good. The decisions inside it aren't always mine.</a></h3>
+    <span class="meta">Aug 2026 · why grask exists, and what it deliberately doesn't do</span>
+    <p>Why the feeling of understanding isn't evidence of understanding, and why I chose multiple choice over an AI grader.</p>
+  </article>
+</section>
+
+
+
+<footer><a href="https://linkedin.com/in/imkp1">linkedin</a> · <a href="mailto:kprateek.bit@gmail.com">kprateek.bit@gmail.com</a> · <a href="https://github.com/imkp1">github</a><br>Bengaluru. No analytics, no cookies.</footer>
+
+</main>
+
+<script>
+(function () {
+  /* theme toggle */
+  var btn = document.getElementById('theme');
+  var root = document.documentElement;
+  function current() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  }
+  btn.addEventListener('click', function () {
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+
+  /* probe */
+  var p = document.getElementById('probe');
+  if (!p) return;
+  p.classList.add('js');
+  var key = p.getAttribute('data-key');
+  var explain = p.querySelector('.why').textContent;
+  var buttons = p.querySelectorAll('button');
+  var verdict = p.querySelector('.verdict');
+  var answered = false;
+  function done(picked) {
+    if (answered) return;
+    answered = true;
+    p.classList.add('done');
+    for (var i = 0; i < buttons.length; i++) {
+      var b = buttons[i], k = b.getAttribute('data-k');
+      if (k === key) b.classList.add('right');
+      if (k === picked) b.classList.add('picked');
+      if (k === picked && k !== key) b.classList.add('wrong');
+    }
+    var mark = document.createElement('span');
+    mark.className = picked === key ? 'mark' : 'mark miss';
+    mark.textContent = (picked === key ? '✓ ' : '✗ you picked ' + picked + ' · ✓ ') + key;
+    verdict.textContent = '';
+    verdict.appendChild(mark);
+    verdict.appendChild(document.createTextNode(explain));
+    verdict.focus();
+    for (var j = 0; j < buttons.length; j++) buttons[j].disabled = true;
+  }
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function () { done(this.getAttribute('data-k')); });
+  }
+})();
+</script>
+</body>
+</html>

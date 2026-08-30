@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The code my agent writes is good. The decisions inside it aren't always mine. | Kumar Prateek</title>
+<meta name="description" content="Getting code to run used to be the forcing function. You argued the choices out, or it didn't work. That's gone. grask is one multiple-choice question about the code you just shipped.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://kprateek.com/writing/grask.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The code my agent writes is good. The decisions inside it aren't always mine.">
+<meta property="og:description" content="Not bugs. Choices. Why I built grask, one multiple-choice question about the code you just shipped, and what it deliberately doesn't do.">
+<meta property="og:url" content="https://kprateek.com/writing/grask.html">
+<meta property="og:image" content="https://kprateek.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root {
+    --paper: #f5f3ee;
+    --ink: #161616;
+    --muted: #6b6862;
+    --rule: #dcd8cf;
+    --red: #b42318;
+    --code-bg: #ecE9e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #121212;
+      --ink: #e6e2d8;
+      --muted: #8f8b82;
+      --rule: #2a2925;
+      --red: #d4574e;
+      --code-bg: #1c1c1a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 68ch;
+    margin: 0 auto;
+    padding: 6rem 1.25rem 5rem;
+  }
+  a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; text-decoration-color: var(--muted); }
+  a:hover { text-decoration-color: var(--ink); }
+  p { margin: 0 0 1.1em; }
+  strong { font-weight: 600; }
+
+  .mono, code, kbd, pre {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  .meta {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* header */
+  header h1 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin: 0 0 1.6rem;
+  }
+  header .lede {
+    font-size: 27px;
+    line-height: 1.28;
+    font-weight: 500;
+    letter-spacing: -.012em;
+    margin: 0 0 1.2rem;
+    max-width: 24ch;
+  }
+  header .about { color: var(--ink); max-width: 56ch; }
+  header .role { margin: 1.4rem 0 .5rem; }
+  header nav { margin-top: .4rem; }
+  header nav a { margin-right: 1.1rem; }
+
+  /* sections */
+  section {
+    margin-top: 5rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--rule);
+    position: relative;
+  }
+  section > h2 {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 2rem;
+  }
+  @media (min-width: 980px) {
+    section > h2 {
+      position: absolute;
+      left: -9.5rem;
+      top: 1.75rem;
+      width: 8rem;
+      text-align: right;
+      margin: 0;
+    }
+  }
+  article + article { margin-top: 3rem; }
+  article h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 .25rem;
+  }
+  article .meta { margin-bottom: .9rem; display: block; }
+
+
+  /* probe */
+  .probe {
+    margin: 1.6rem 0 1.4rem;
+    padding: 1.2rem 0 1rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+  }
+  .probe .meta { display: block; margin-bottom: .8rem; text-transform: none; letter-spacing: .02em; }
+  .probe .q { margin-bottom: .9rem; }
+  .probe ol { list-style: none; padding: 0; margin: 0 0 .6rem; }
+  .probe li { margin: 0; }
+  .probe button {
+    all: unset;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    padding: .35rem .5rem .35rem 0;
+    border-radius: 2px;
+    line-height: 1.45;
+  }
+  .probe button:hover, .probe button:focus-visible { background: var(--code-bg); outline: none; }
+  .probe button .k { display: inline-block; width: 1.6rem; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+  .probe.done button { cursor: default; }
+  .probe.done button:hover { background: none; }
+  .probe.done button.picked.right .k { color: var(--red); }
+  .probe.done button.picked.wrong { color: var(--muted); text-decoration: line-through; }
+  .probe.done button.right { font-weight: 600; }
+  .probe .verdict { display: none; margin: .8rem 0 0; padding-top: .8rem; border-top: 1px solid var(--rule); }
+  .probe.done .verdict { display: block; }
+  .probe .mark { color: var(--red); font-family: ui-monospace, Menlo, monospace; margin-right: .4rem; }
+  .probe details summary { cursor: pointer; color: var(--muted); font-size: 14px; margin-top: .4rem; }
+  .probe.js details { display: none; }
+  .probe .hint { color: var(--muted); font-size: 13px; margin: .6rem 0 0; }
+
+  pre {
+    background: var(--code-bg);
+    padding: .8rem 1rem;
+    font-size: 13.5px;
+    overflow-x: auto;
+    margin: .6rem 0 1.1rem;
+    line-height: 1.5;
+  }
+  .tags { color: var(--muted); font-size: 14px; }
+  .tags span + span::before { content: " · "; }
+
+  ul.plain { list-style: none; padding: 0; margin: 0; }
+  ul.plain li { margin: 0 0 .35rem; }
+
+  footer { margin-top: 5rem; padding-top: 1.6rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: 13px; line-height: 1.9; }
+
+  article.post h2 { font-size: 17px; font-weight: 600; margin: 2.2rem 0 .6rem; }
+  article.post ul { padding-left: 1.2rem; }
+  article.post li { margin-bottom: .6rem; }
+  .post-title { font-size: 27px; line-height: 1.28; font-weight: 500; letter-spacing: -.012em; margin: 0 0 .6rem; }
+  .back { display: inline-block; margin-bottom: 3rem; }
+</style>
+</head>
+<body>
+<main>
+<a class="back mono" href="../">← Kumar Prateek</a>
+<article class="post">
+<h1 class="post-title">The code my agent writes is good. The decisions inside it aren't always mine.</h1>
+<span class="meta" style="display:block;margin-bottom:2rem">Aug 2026 · Kumar Prateek</span>
+<p>Not bugs. Choices. I described a problem, something came back that made sense, I read it, I shipped it. I write most of my code with Claude now; most of us do. This is about something that started happening to me because of it, and a small tool I built to deal with it.</p>
+<h2>The thing I noticed</h2>
+<p>I read about something. I nod. It makes sense. I close the tab. Two weeks later someone asks me about it, and what comes out of my mouth is a shape: the right words in roughly the right order, with nothing behind them. I knew <em>of</em> the thing. I didn't know it.</p>
+<p>From the inside, those two states feel identical. That's the whole problem. There is no internal signal that separates "I understand this" from "I watched this get explained." So you can't catch it by being honest with yourself, or by being smart, or by trying harder. The feeling of understanding is not evidence of understanding.</p>
+<h2>What agents did to it</h2>
+<p>Getting code to run used to be the forcing function. You argued the choices out, or it didn't work. Repeat "it came back, it made sense, I shipped it" across a few PRs and something strange happens: the code has decisions in it that I approved in half a second and never actually made. How a retry behaves. What happens on the second delivery of the same message. Why a lock is taken there and not one line earlier. I've watched them work three times. I've never once had to know why.</p>
+<p>And from the inside, "I decided this" and "I approved this in half a second" feel exactly the same. Shipping and understanding have come apart, and nothing replaced the gap. So you get people, and I'm one of them, building up huge surface area and much less depth than their commit history implies. Not because anyone's lazy. Because the thing that used to force the issue quietly stopped.</p>
+<h2>The idea: one question</h2>
+<p>So I built one. It's called grask, and it does one thing.</p>
+<p>When you close a Claude Code session, it reads what happened. Most days it decides there's nothing worth asking. If you spent the session renaming variables and fixing CI, there's nothing to be hollow about, and asking anyway would just be nagging. <strong>Most sessions produce no question, and that silence is the point</strong>, not a failure to find something.</p>
+<p>When there <em>is</em> something, one question is waiting the next time you type <code>/grask:grask</code>. The shape of it: you changed how a service handles a retry last week. The question asks what happens downstream the second time the same message arrives. Four options, one of them explaining why the code is written the way it is. If you know it, that's ten seconds and you move on. If you don't, better to notice now than in a review. A real one looks like this:</p>
+<pre>
+from 2026-08-08 · retry backoff in the
+webhook dispatcher
+
+Your retry loop sleeps 2**attempt seconds
+between attempts. Why does adding random
+jitter matter more as the number of
+clients grows?
+
+  a) Jitter reduces the total number of
+     retries each client makes.
+  b) Clients knocked out together retry
+     together; jitter spreads them back out.
+  c) Exponential backoff overflows without
+     a random term to bound it.
+  d) Jitter is what makes the sleep
+     interruptible by a signal.
+
+> b
+✓ Backoff decides how long each client
+waits. It does nothing about them all
+waiting the same amount. Clients dropped
+by one outage come back in lockstep, so
+the recovering service takes the same
+thundering herd on every cycle. Jitter
+decorrelates the schedules.
+</pre>
+<p>Notice it isn't "what is a retry policy." You can answer that from memory, and it proves nothing. The only way to pick right is to have actually made the decision that's in your code, or to make it, late, right there.</p>
+<p>Twenty seconds. Pick an option, or choose "Other" and type <code>skip</code>. Skipping is always free. If the question misreads what happened, type <code>wrong: &lt;what's off&gt;</code> instead; that ends it and logs a bug against grask, not against you.</p>
+<h2>Why multiple choice, and why no AI grades you</h2>
+<p>The first version asked you to explain your reasoning in your own words, and had a model grade the explanation. I killed that, because a grader can fail in two opposite ways and both are fatal.</p>
+<p>Ask an LLM to judge your reasoning and it will usually tell you you're doing great. It accepts a vague answer, quietly fill in what you left out, congratulate you. A grask that flatters you is an expensive machine for making you feel smart.</p>
+<p>The worse failure: the grader misreads your code, invents a bug you didn't write, and tells you, confidently, about your own code, in front of you, that you don't understand something you do. That gets the tool disabled forever, and it should. Trust is the whole product, and it's decided in the first ten interactions.</p>
+<p>So there's no grader. Three or four options, one right, and the answer is written at the same moment as the question. Grading is just comparing two numbers. Nothing in the loop can flatter you and nothing can accuse you. And <code>wrong: …</code> is always a valid answer: the premise being off is grask's failure, not yours.</p>
+<p>What I'm after isn't explanation. You can get one of idempotency anywhere in fifteen seconds. The scarce thing is <strong>calibration</strong>: the gap between how well you think you understand something and how well you do. A wrong answer you <em>knew</em> was a guess is fine. A wrong answer you'd have bet on is the whole point.</p>
+<h2>What it reads, which you should know before installing</h2>
+<p>A tool that asks about your code has to read your code, and I'd rather you hear the shape of that from me than find it out afterwards.</p>
+<p>grask reads the transcripts Claude Code already writes to <code>~/.claude/projects/</code>, and it is not scoped to the repo you're sitting in. It sees all of them. It sends transcript content to a model to work out what's worth asking about: your prompts, the agent's replies, the before-and-after of edits. It does that by shelling out to the <code>claude</code> binary you already have, so it runs under your existing Claude Code auth and whatever data policy your account already carries. There's no second API key, nothing goes anywhere else, and there's no telemetry. What it extracts, including verbatim quotes of things you typed, is stored locally in SQLite under <code>~/.claude/grask/</code>.</p>
+<p>Two consequences worth stating plainly. <code>GRASK_HOME</code> moves the database somewhere else if you want it somewhere else. And if any repository you work in is covered by an agreement that prohibits sending source to a model, don't install the hook. The session-end hook captures whatever session just ended and has no per-project exclusion.</p>
+<h2>Where it's at, honestly</h2>
+<p>It's alpha. It works end to end: sessions get read, most produce nothing, and the ones that don't put a single question in front of you inside Claude Code.</p>
+<p>There is one check on the questions themselves. Before a probe ever reaches you, a separate stage re-reads the options <em>cold</em>, with no answer key, no explanation and no transcript, and judges each one true or false on its own. The probe survives only if exactly one option is true and it's the one the key names. In the probes generated so far that check has already thrown out several, including one whose key asserted a name collision that doesn't happen.</p>
+<p>What that check can't catch is a question that's internally consistent and still tests nothing you could carry to another codebase. Which is the first of three things that aren't built, and they're the three that decide whether any of this was worth doing:</p>
+<ul>
+<li><strong>A way to know if the questions are worth asking.</strong> The cold re-read catches a broken key. It says nothing about whether the question was worth your twenty seconds. The one-keypress <em>"was this worth asking?"</em> vote is the planned measure, and it isn't built, so right now the only judge of that is me reading them and deciding I like them, which is exactly the self-assessment this whole post says you can't trust.</li>
+<li><strong>Noticing the same gap twice.</strong> A concept that keeps coming back and keeps grading wrong is the most useful thing this tool could ever tell you, and it can't see that yet. Two sessions can currently produce near-identical questions.</li>
+<li><strong>Coming back a week later</strong> to check whether the gap actually filled in. Without that, it catches the gap and never checks. Half a product.</li>
+</ul>
+<h2>What I want to know</h2>
+<p>I'm sharing this partly because I don't know if it's a real product or just a good tool for a small number of people who happen to be wired like me. I'd rather find that out on purpose than by accident. It's alpha, and the README says what isn't built yet.</p>
+<p>So, honestly:</p>
+<ul>
+<li>Do you recognize this? The decisions-you-approved-but-never-made thing?</li>
+<li>Would you use it, or try it twice and quietly turn it off? Be specific.</li>
+<li>Multiple choice, or a blank box? I picked multiple choice because it deletes the grader and every way it could flatter or falsely accuse you. The cost is you might guess right and learn nothing. Wrong trade?</li>
+</ul>
+<p>If you want to try it, it needs the Claude Code CLI and a <code>python3</code> (≥ 3.8), and nothing else. Inside Claude Code:</p>
+<pre>
+/plugin marketplace add imkp1/grask
+/plugin install grask
+</pre>
+<p>Then <code>/grask:grask</code> when you want the question. The rest of the caveats are in the README: <strong><a href="https://github.com/imkp1/grask">github.com/imkp1/grask</a></strong></p>
+<p>Tell me if it's stupid.</p>
+</article>
+<footer><a href="../">kprateek.com</a> · <a href="https://github.com/imkp1/grask">github.com/imkp1/grask</a><br>No analytics, no cookies.</footer>
+</main>
+</body>
+</html>
