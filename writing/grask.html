@@ -13,6 +13,32 @@
 <meta property="og:url" content="https://kprateek.com/writing/grask.html">
 <meta property="og:image" content="https://kprateek.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Kumar Prateek">
+<meta property="og:site_name" content="Kumar Prateek">
+<meta property="article:author" content="Kumar Prateek">
+<meta property="article:published_time" content="2026-08-30">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The code my agent writes is good. The decisions inside it aren't always mine.",
+  "description": "Getting code to run used to be the forcing function. You argued the choices out, or it didn't work. That's gone. grask is one multiple-choice question about the code you just shipped.",
+  "url": "https://kprateek.com/writing/grask.html",
+  "datePublished": "2026-08-30",
+  "image": "https://kprateek.com/og.png",
+  "author": { "@type": "Person", "name": "Kumar Prateek", "url": "https://kprateek.com/" },
+  "mainEntityOfPage": "https://kprateek.com/writing/grask.html"
+}
+</script>
+<script>
+  /* apply saved theme before first paint to avoid a flash */
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
 <style>
   :root {
     --paper: #f5f3ee;
@@ -20,17 +46,28 @@
     --muted: #6b6862;
     --rule: #dcd8cf;
     --red: #b42318;
-    --code-bg: #ecE9e1;
+    --code-bg: #ece9e1;
+    color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --paper: #121212;
       --ink: #e6e2d8;
       --muted: #8f8b82;
       --rule: #2a2925;
       --red: #d4574e;
       --code-bg: #1c1c1a;
+      color-scheme: dark;
     }
+  }
+  :root[data-theme="dark"] {
+    --paper: #121212;
+    --ink: #e6e2d8;
+    --muted: #8f8b82;
+    --rule: #2a2925;
+    --red: #d4574e;
+    --code-bg: #1c1c1a;
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
   html { background: var(--paper); }
@@ -62,6 +99,28 @@
     letter-spacing: .06em;
     text-transform: uppercase;
     color: var(--muted);
+  }
+
+  /* top bar */
+  .topbar { display: flex; align-items: center; margin-bottom: 3rem; }
+  .topbar .back { margin-bottom: 0; }
+  .theme {
+    all: unset;
+    cursor: pointer;
+    margin-left: auto;
+    padding: .1rem .35rem;
+    border-radius: 2px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1;
+  }
+  .theme:hover, .theme:focus-visible { color: var(--ink); background: var(--code-bg); }
+  .theme .sun { display: none; }
+  :root[data-theme="dark"] .theme .sun { display: inline; }
+  :root[data-theme="dark"] .theme .moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme .sun { display: inline; }
+    :root:not([data-theme="light"]) .theme .moon { display: none; }
   }
 
   /* header */
@@ -180,7 +239,10 @@
 </head>
 <body>
 <main>
-<a class="back mono" href="../">← Kumar Prateek</a>
+<div class="topbar">
+  <a class="back mono" href="../">← Kumar Prateek</a>
+  <button class="theme" id="theme" type="button" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="moon">☾</span><span class="sun">☀</span></button>
+</div>
 <article class="post">
 <h1 class="post-title">The code my agent writes is good. The decisions inside it aren't always mine.</h1>
 <span class="meta" style="display:block;margin-bottom:2rem">Aug 2026 · Kumar Prateek</span>
@@ -261,5 +323,21 @@ decorrelates the schedules.
 </article>
 <footer><a href="../">kprateek.com</a> · <a href="https://github.com/imkp1/grask">github.com/imkp1/grask</a><br>No analytics, no cookies.</footer>
 </main>
+<script>
+(function () {
+  var btn = document.getElementById('theme');
+  var root = document.documentElement;
+  function current() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  }
+  btn.addEventListener('click', function () {
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>
 </body>
 </html>
