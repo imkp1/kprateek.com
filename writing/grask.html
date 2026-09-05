@@ -5,29 +5,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The code my agent writes is good. The decisions inside it aren't always mine. | Kumar Prateek</title>
 <meta name="description" content="Getting code to run used to be the forcing function. You argued the choices out, or it didn't work. That's gone. grask is one multiple-choice question about the code you just shipped.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://kprateek.com/writing/grask.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The code my agent writes is good. The decisions inside it aren't always mine.">
 <meta property="og:description" content="Not bugs. Choices. Why I built grask, one multiple-choice question about the code you just shipped, and what it deliberately doesn't do.">
 <meta property="og:url" content="https://kprateek.com/writing/grask.html">
 <meta property="og:image" content="https://kprateek.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kumar Prateek — I like building backend systems, and the tools that make them easier to change.">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Kumar Prateek — I like building backend systems, and the tools that make them easier to change.">
 <meta name="author" content="Kumar Prateek">
 <meta property="og:site_name" content="Kumar Prateek">
-<meta property="article:author" content="Kumar Prateek">
-<meta property="article:published_time" content="2026-08-30">
+<meta property="article:author" content="https://kprateek.com/">
+<meta property="article:published_time" content="2026-08-30T00:00:00+05:30">
+<meta property="article:modified_time" content="2026-09-05T00:00:00+05:30">
+<meta property="article:section" content="Software engineering">
+<meta property="article:tag" content="AI-assisted development">
+<meta property="article:tag" content="Claude Code">
+<meta property="article:tag" content="Developer tools">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "The code my agent writes is good. The decisions inside it aren't always mine.",
-  "description": "Getting code to run used to be the forcing function. You argued the choices out, or it didn't work. That's gone. grask is one multiple-choice question about the code you just shipped.",
-  "url": "https://kprateek.com/writing/grask.html",
-  "datePublished": "2026-08-30",
-  "image": "https://kprateek.com/og.png",
-  "author": { "@type": "Person", "name": "Kumar Prateek", "url": "https://kprateek.com/" },
-  "mainEntityOfPage": "https://kprateek.com/writing/grask.html"
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://kprateek.com/writing/grask.html#article",
+      "headline": "The code my agent writes is good. The decisions inside it aren't always mine.",
+      "description": "Getting code to run used to be the forcing function. You argued the choices out, or it didn't work. That's gone. grask is one multiple-choice question about the code you just shipped.",
+      "url": "https://kprateek.com/writing/grask.html",
+      "datePublished": "2026-08-30T00:00:00+05:30",
+      "dateModified": "2026-09-05T00:00:00+05:30",
+      "inLanguage": "en",
+      "image": "https://kprateek.com/og.png",
+      "keywords": "AI-assisted development, Claude Code, developer tools, code comprehension, grask",
+      "articleSection": "Software engineering",
+      "author": { "@id": "https://kprateek.com/#person" },
+      "publisher": { "@id": "https://kprateek.com/#person" },
+      "isPartOf": { "@id": "https://kprateek.com/#website" },
+      "mainEntityOfPage": "https://kprateek.com/writing/grask.html",
+      "about": {
+        "@type": "SoftwareApplication",
+        "name": "grask",
+        "url": "https://github.com/imkp1/grask",
+        "applicationCategory": "DeveloperApplication"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://kprateek.com/#person",
+      "name": "Kumar Prateek",
+      "url": "https://kprateek.com/",
+      "jobTitle": "Staff Software Engineer",
+      "worksFor": { "@type": "Organization", "name": "Zepto" },
+      "sameAs": ["https://github.com/imkp1", "https://linkedin.com/in/imkp1"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://kprateek.com/#website",
+      "url": "https://kprateek.com/",
+      "name": "Kumar Prateek",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://kprateek.com/#person" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Kumar Prateek", "item": "https://kprateek.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Writing", "item": "https://kprateek.com/#writing" },
+        { "@type": "ListItem", "position": 3, "name": "The code my agent writes is good. The decisions inside it aren't always mine." }
+      ]
+    }
+  ]
 }
 </script>
 <script>
@@ -70,7 +127,7 @@
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
-  html { background: var(--paper); }
+  html { background: var(--paper); -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     color: var(--ink);
@@ -193,15 +250,17 @@
   .probe li { margin: 0; }
   .probe button {
     all: unset;
-    display: block;
+    display: flex;
+    align-items: baseline;
+    gap: .1rem;
     width: 100%;
     cursor: pointer;
-    padding: .35rem .5rem .35rem 0;
+    padding: .5rem .5rem .5rem 0;
     border-radius: 2px;
     line-height: 1.45;
   }
   .probe button:hover, .probe button:focus-visible { background: var(--code-bg); outline: none; }
-  .probe button .k { display: inline-block; width: 1.6rem; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+  .probe button .k { flex: 0 0 1.6rem; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
   .probe.done button { cursor: default; }
   .probe.done button:hover { background: none; }
   .probe.done button.picked.right .k { color: var(--red); }
@@ -235,6 +294,25 @@
   article.post li { margin-bottom: .6rem; }
   .post-title { font-size: 27px; line-height: 1.28; font-weight: 500; letter-spacing: -.012em; margin: 0 0 .6rem; }
   .back { display: inline-block; margin-bottom: 3rem; }
+
+  /* mobile: tighter vertical rhythm, larger tap targets, no long-token overflow */
+  @media (max-width: 640px) {
+    body { line-height: 1.62; overflow-wrap: break-word; }
+    main { padding: 1.75rem 1.15rem 3.5rem; }
+    .topbar { margin-bottom: 2rem; }
+    .back { margin-bottom: 0; padding: .4rem 0; }
+    .theme { padding: .45rem .5rem; }
+    .post-title { font-size: clamp(22px, 6.2vw, 27px); }
+    article.post h2 { margin: 1.9rem 0 .55rem; }
+    article.post ul { padding-left: 1.1rem; }
+    section { margin-top: 3.25rem; padding-top: 1.4rem; }
+    section > h2 { margin-bottom: 1.5rem; }
+    article + article { margin-top: 2.25rem; }
+    .probe { margin: 1.4rem 0 1.2rem; }
+    .probe button { padding: .55rem .5rem .55rem 0; }
+    pre { padding: .8rem .85rem; }
+    footer { margin-top: 3.25rem; line-height: 2; }
+  }
 </style>
 </head>
 <body>
@@ -321,7 +399,7 @@ decorrelates the schedules.
 <p>Then <code>/grask:grask</code> when you want the question. The rest of the caveats are in the README: <strong><a href="https://github.com/imkp1/grask">github.com/imkp1/grask</a></strong></p>
 <p>Tell me if it's stupid.</p>
 </article>
-<footer><a href="../">kprateek.com</a> · <a href="https://github.com/imkp1/grask">github.com/imkp1/grask</a><br>No analytics, no cookies.</footer>
+<footer><a href="../">kprateek.com</a> · <a href="../#built">grask on the homepage</a> · <a href="https://github.com/imkp1/grask" rel="noopener">github.com/imkp1/grask</a><br>Written by <a href="../" rel="author">Kumar Prateek</a>, Staff Software Engineer at Zepto, Bengaluru. No analytics, no cookies.</footer>
 </main>
 <script>
 (function () {

@@ -3,27 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kumar Prateek</title>
-<meta name="description" content="Kumar Prateek, Staff Software Engineer at Zepto. Backend systems and the tools that make them easier to change.">
+<title>Kumar Prateek — Staff Software Engineer, Backend Systems (Zepto)</title>
+<meta name="description" content="Kumar Prateek is a Staff Software Engineer in Supply Chain Tech at Zepto, Bengaluru. Backend systems at scale — order fulfillment, warehouse management, pricing and promotions — and the tools that make them easier to change. Building grask.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://kprateek.com/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kumar Prateek">
-<meta property="og:description" content="I like building backend systems, and the tools that make them easier to change. Staff Software Engineer at Zepto. Building grask.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="me" href="https://linkedin.com/in/imkp1">
+<link rel="me" href="https://github.com/imkp1">
+<link rel="me" href="mailto:kprateek.bit@gmail.com">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Kumar Prateek — Staff Software Engineer, Backend Systems">
+<meta property="og:description" content="I like building backend systems, and the tools that make them easier to change. Staff Software Engineer in Supply Chain Tech at Zepto. Building grask.">
 <meta property="og:url" content="https://kprateek.com/">
 <meta property="og:image" content="https://kprateek.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kumar Prateek — I like building backend systems, and the tools that make them easier to change.">
+<meta property="og:locale" content="en_US">
+<meta property="profile:first_name" content="Kumar">
+<meta property="profile:last_name" content="Prateek">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Kumar Prateek — I like building backend systems, and the tools that make them easier to change.">
 <meta name="author" content="Kumar Prateek">
 <meta property="og:site_name" content="Kumar Prateek">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Kumar Prateek",
-  "url": "https://kprateek.com/",
-  "jobTitle": "Staff Software Engineer",
-  "worksFor": { "@type": "Organization", "name": "Zepto" },
-  "sameAs": ["https://github.com/imkp1"]
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://kprateek.com/#person",
+      "name": "Kumar Prateek",
+      "alternateName": "Prateek Kumar",
+      "url": "https://kprateek.com/",
+      "image": "https://kprateek.com/og.png",
+      "email": "kprateek.bit@gmail.com",
+      "description": "Staff Software Engineer in Supply Chain Tech at Zepto. Backend systems at scale — order fulfillment, warehouse management, pricing and promotions — and the tools that make them easier to change.",
+      "jobTitle": "Staff Software Engineer",
+      "worksFor": { "@type": "Organization", "name": "Zepto", "url": "https://www.zepto.com/" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressRegion": "Karnataka", "addressCountry": "IN" },
+      "knowsAbout": [
+        "Backend engineering",
+        "Distributed systems",
+        "Order fulfillment systems",
+        "Warehouse management systems",
+        "Supply chain technology",
+        "Pricing and promotions platforms",
+        "Java",
+        "Kubernetes",
+        "AI-assisted software development"
+      ],
+      "sameAs": [
+        "https://github.com/imkp1",
+        "https://linkedin.com/in/imkp1"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://kprateek.com/#website",
+      "url": "https://kprateek.com/",
+      "name": "Kumar Prateek",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://kprateek.com/#person" }
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://kprateek.com/#profilepage",
+      "url": "https://kprateek.com/",
+      "name": "Kumar Prateek — Staff Software Engineer, Backend Systems",
+      "isPartOf": { "@id": "https://kprateek.com/#website" },
+      "about": { "@id": "https://kprateek.com/#person" },
+      "mainEntity": { "@id": "https://kprateek.com/#person" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "grask",
+      "url": "https://github.com/imkp1/grask",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows",
+      "description": "A Claude Code plugin that asks you one multiple-choice question about the code you just shipped, as a signal of whether you actually understood it.",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@id": "https://kprateek.com/#person" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+  ]
 }
 </script>
 <script>
@@ -69,7 +137,7 @@
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
-  html { background: var(--paper); scroll-behavior: smooth; }
+  html { background: var(--paper); scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
     margin: 0;
@@ -210,15 +278,17 @@
   .probe li { margin: 0; }
   .probe button {
     all: unset;
-    display: block;
+    display: flex;
+    align-items: baseline;
+    gap: .1rem;
     width: 100%;
     cursor: pointer;
-    padding: .35rem .5rem .35rem 0;
+    padding: .5rem .5rem .5rem 0;
     border-radius: 2px;
     line-height: 1.45;
   }
   .probe button:hover, .probe button:focus-visible { background: var(--code-bg); outline: none; }
-  .probe button .k { display: inline-block; width: 1.6rem; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+  .probe button .k { flex: 0 0 1.6rem; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
   .probe.done button { cursor: default; }
   .probe.done button:hover { background: none; }
   .probe.done button.picked.right .k { color: var(--ok); }
@@ -256,6 +326,44 @@
   ul.plain li { margin: 0 0 .35rem; }
 
   footer { margin-top: 5rem; padding-top: 1.6rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: 13px; line-height: 1.9; }
+
+  /* mobile: tighter vertical rhythm, larger tap targets, no long-token overflow */
+  @media (max-width: 640px) {
+    body { line-height: 1.62; overflow-wrap: break-word; }
+    main { padding: 1.5rem 1.15rem 3.5rem; }
+
+    .top {
+      gap: 1.15rem;
+      margin: 0 0 2.5rem;
+      flex-wrap: wrap;
+      row-gap: .25rem;
+    }
+    .top a { padding: .55rem 0; }
+    .top .theme { padding: .45rem .5rem; }
+
+    header .role { margin-bottom: 1.4rem; }
+    header .lede {
+      font-size: clamp(22px, 6.2vw, 27px);
+      max-width: none;
+      margin-bottom: 1rem;
+    }
+    header .about { max-width: none; }
+    header nav { margin-top: 1rem; }
+    header nav a { display: inline-block; padding: .3rem 0; margin-right: 1.4rem; }
+
+    section { margin-top: 3.25rem; padding-top: 1.4rem; }
+    section > h2 { margin-bottom: 1.5rem; }
+    .company + .meta { margin-bottom: 1.5rem; }
+    .company-group + .company-group { margin-top: 3rem; }
+    article + article { margin-top: 2.25rem; }
+
+    .probe { margin: 1.4rem 0 1.2rem; }
+    .probe button { padding: .55rem .5rem .55rem 0; }
+    .note { padding: .8rem .85rem; }
+    pre { padding: .8rem .85rem; }
+
+    footer { margin-top: 3.25rem; line-height: 2; }
+  }
 </style>
 </head>
 <body>
@@ -275,10 +383,10 @@
   <p class="role meta">Staff Software Engineer · Supply Chain Tech @ Zepto · Bengaluru</p>
   <p class="lede">I like building backend systems, and the tools that make them easier to change.</p>
   <p class="about">Backend engineer, six and a half years in. Three of them at OYO, on the services that price a room and discount it; since 2023 in Supply Chain Tech at Zepto, warehouse systems first, then order fulfillment. Outside work I'm slowly getting less bad at chess.</p>
-  <nav class="mono">
-    <a href="https://linkedin.com/in/imkp1">linkedin</a>
+  <nav class="mono" aria-label="Profiles">
+    <a href="https://linkedin.com/in/imkp1" rel="me noopener">linkedin</a>
     <a href="mailto:kprateek.bit@gmail.com">email</a>
-    <a href="https://github.com/imkp1">github</a>
+    <a href="https://github.com/imkp1" rel="me noopener">github</a>
   </nav>
 </header>
 
@@ -382,7 +490,7 @@
 
 
 
-<footer><a href="https://linkedin.com/in/imkp1">linkedin</a> · <a href="mailto:kprateek.bit@gmail.com">kprateek.bit@gmail.com</a> · <a href="https://github.com/imkp1">github</a><br>Bengaluru. No analytics, no cookies.</footer>
+<footer><a href="https://linkedin.com/in/imkp1" rel="me noopener">linkedin</a> · <a href="mailto:kprateek.bit@gmail.com">kprateek.bit@gmail.com</a> · <a href="https://github.com/imkp1" rel="me noopener">github</a><br>Kumar Prateek · Staff Software Engineer, Supply Chain Tech at Zepto · Bengaluru, India. No analytics, no cookies.</footer>
 
 </main>
 
